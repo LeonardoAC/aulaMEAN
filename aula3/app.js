@@ -5,12 +5,12 @@ var io = require('socket.io')(http);
 var clients = {}; 
 
 app.get('/', function(req, res){
-  res.send('server is running');
+  res.send('server rodando...');
 });
 
 io.on("connection", function (client) {  
     client.on("join", function(name){
-    	console.log("Joined: " + name);
+    	console.log("Juntou: " + name);
         clients[client.id] = name;
         client.emit("update", "Você se conectou ao servidor.");
         client.broadcast.emit("update", name + " juntou-se ao server.")
@@ -22,7 +22,7 @@ io.on("connection", function (client) {
     });
 
     client.on("disconnect", function(){
-    	console.log("Disconnect");
+    	console.log("Disconectado");
         io.emit("update", clients[client.id] + " saiu do server.");
         delete clients[client.id];
     });
